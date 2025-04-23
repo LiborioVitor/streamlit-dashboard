@@ -37,7 +37,7 @@ except:
     st.warning("⚠️ Não foi possível descobrir o IP público.")
 
 # Obter dados
-engine = f.criar_conexao(connection='relatorios_azure', database='piperun_clean')
+engine = f.criar_conexao(database='piperun_clean')
 sql = '''SELECT data_venda, mrr, vendedor FROM teste.streamlit'''
 df = f.select_para_df(engine=engine, sql=sql)
 
