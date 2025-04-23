@@ -3,7 +3,6 @@ import streamlit as st
 import pandas as pd
 import plotly.express as px
 import plotly.graph_objects as go
-from streamlit_autorefresh import st_autorefresh
 from datetime import datetime
 import numpy as np
 
@@ -131,7 +130,18 @@ def criar_grafico_vendedores(df):
 
 # Configuração da página
 st.set_page_config(layout='wide', page_title="Painel de Vendas", page_icon="📊")
-st_autorefresh(interval=30 * 1000, key="refresh")
+
+# Recarregamento automático via JavaScript (a cada 30 segundos)
+st.markdown("""
+    <script>
+        function refreshPage() {
+            setTimeout(function(){
+                window.location.reload();
+            }, 30000);
+        }
+        refreshPage();
+    </script>
+""", unsafe_allow_html=True)
 
 # Estilização visual
 st.markdown("""
