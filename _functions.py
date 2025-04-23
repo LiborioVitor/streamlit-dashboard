@@ -6,13 +6,13 @@ def criar_conexao(connection, database):
     # cria o engine da conexao com o banco
     try:
 
-        with open("credentials/db_cred.json") as db_connections_file:
-            db_connections = json.load(db_connections_file)
-        
-        db_connections = db_connections[connection]
+        host = 'datasales-crm-db-serverless-prd-new-dalben.mysql.database.azure.com'
+        user = "vitor.liborio"
+        password = "c080bc13-e852-4dee-bed9-6ffeef171344"
+        port = 3306
 
         # Criar a string de conexão do banco de dados
-        connection_str = f"mysql+pymysql://{db_connections['user']}:{db_connections['password']}@{db_connections['host']}:{db_connections['port']}/{database}"
+        connection_str = f"mysql+pymysql://{user}:{password}@{host}:{port}/{database}"
 
         # Criar o engine de conexão
         engine = create_engine(connection_str)
