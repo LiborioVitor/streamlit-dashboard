@@ -4,3 +4,4 @@ plotly
 sqlalchemy
 pymysql
 streamlit-autorefresh
+datetime

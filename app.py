@@ -3,9 +3,12 @@ import streamlit as st
 import pandas as pd
 import plotly.express as px
 from streamlit_autorefresh import st_autorefresh
+from datetime import datetime
 
 st.set_page_config(layout='wide')
-st_autorefresh(interval=30000, key="refresh")
+st_autorefresh(interval=30 * 1000, key="refresh")
+
+st.write("Última atualização:", datetime.now().strftime("%H:%M:%S"))
 
 #engine = f.criar_conexao(connection= 'relatorios_azure',database= 'piperun_clean')
 #sql = '''select data_venda, mrr, vendedor from datasales.vendas_base where year(data_venda) = 2025 and equipe in ('Inbound','Outbound') '''
