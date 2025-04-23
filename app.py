@@ -10,15 +10,15 @@ st_autorefresh(interval=30 * 1000, key="refresh")
 
 st.write("Última atualização:", datetime.now().strftime("%H:%M:%S"))
 
-#engine = f.criar_conexao(connection= 'relatorios_azure',database= 'piperun_clean')
-#sql = '''select data_venda, mrr, vendedor from datasales.vendas_base where year(data_venda) = 2025 and equipe in ('Inbound','Outbound') '''
-#df = f.select_para_df(engine=engine,sql=sql)
+engine = f.criar_conexao(connection= 'relatorios_azure',database= 'piperun_clean')
+sql = '''SELECT data_venda, mrr, vendedor FROM teste.streamlit '''
+df = f.select_para_df(engine=engine,sql=sql)
 
-df = pd.DataFrame({
-    'data_venda': pd.date_range(start='2025-03-29', periods=10),
-    'mrr': [1000, 1200, 1500, 1700, 1600, 1800, 2100, 1900, 2200, 2000],
-    'vendedor': ['Alice', 'Bob', 'Carlos', 'Alice', 'Bob', 'Carlos', 'Alice', 'Bob', 'Carlos', 'Alice']
-})
+# df = pd.DataFrame({
+#     'data_venda': pd.date_range(start='2025-03-29', periods=10),
+#     'mrr': [1000, 1200, 1500, 1700, 1600, 1800, 2100, 1900, 2200, 2000],
+#     'vendedor': ['Alice', 'Bob', 'Carlos', 'Alice', 'Bob', 'Carlos', 'Alice', 'Bob', 'Carlos', 'Alice']
+# })
 
 df['data_venda'] = pd.to_datetime(df['data_venda'])
 
