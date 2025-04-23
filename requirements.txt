@@ -5,3 +5,4 @@ sqlalchemy
 pymysql
 streamlit-autorefresh
 datetime
+requests

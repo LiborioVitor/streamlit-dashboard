@@ -4,11 +4,18 @@ import pandas as pd
 import plotly.express as px
 from streamlit_autorefresh import st_autorefresh
 from datetime import datetime
+import requests
 
 st.set_page_config(layout='wide')
 st_autorefresh(interval=30 * 1000, key="refresh")
 
 st.write("Última atualização:", datetime.now().strftime("%H:%M:%S"))
+
+try:
+    ip = requests.get('https://api.ipify.org').text
+    st.info(f"IP público da máquina: {ip}")
+except:
+    st.warning("Não foi possível descobrir o IP público.")
 
 engine = f.criar_conexao(connection= 'relatorios_azure',database= 'piperun_clean')
 sql = '''SELECT data_venda, mrr, vendedor FROM teste.streamlit '''
