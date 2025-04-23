@@ -5,7 +5,6 @@ import plotly.express as px
 import plotly.graph_objects as go
 from streamlit_autorefresh import st_autorefresh
 from datetime import datetime
-import locale
 import numpy as np
 
 # Função para carregar e preparar os dados
@@ -26,11 +25,9 @@ def obter_dados():
 
     df = df[(df['data_venda'] >= inicio_12_meses) & (df['data_venda'] <= fim_mes_passado)]
     
-    # Formatar meses e ordenar corretamente
-    locale.setlocale(locale.LC_TIME, 'pt_BR.UTF-8')
     df['mes_ordenada'] = df['data_venda'].dt.to_period('M')
     df_mensal = df.groupby('mes_ordenada', as_index=False)['mrr'].sum()
-    df_mensal['mes'] = df_mensal['mes_ordenada'].dt.strftime('%b/%Y').str.title()
+    df_mensal['mes'] = df_mensal['mes_ordenada'].dt.strftime('%m/%Y')
 
     return df, df_mensal
 
