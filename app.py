@@ -131,7 +131,7 @@ def criar_grafico_vendedores(df):
 
 # Configuração da página
 st.set_page_config(layout='wide', page_title="Painel de Vendas", page_icon="📊")
-st_autorefresh(interval=300 * 1000, key="refresh")
+st_autorefresh(interval=30 * 1000, key="refresh")
 
 # Estilização visual
 st.markdown("""
