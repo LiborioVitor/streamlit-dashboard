@@ -1,9 +1,9 @@
 import _functions as f
-#import streamlit as st
+import streamlit as st
 import pandas as pd
 import plotly.express as px
 
-#st.set_page_config(layout='wide')
+st.set_page_config(layout='wide')
 
 engine = f.criar_conexao(connection= 'relatorios_azure',database= 'piperun_clean')
 
@@ -19,10 +19,8 @@ df['mes'] = df['data_venda'].apply(lambda x: x.strftime('%Y-%m'))
 #df_filtered = df[df['mes'] == month]
 #df_filtered
 
-#col1, col2 = st.columns(2)
+col1, col2 = st.columns(2)
 
-#fig_date = px.bar(df, x='mes', y='mrr', title='MRR')
+fig_date = px.bar(df, x='mes', y='mrr', title='MRR')
 
-#col1.plotly_chart(fig_date)
-
-print(df.head())
+col1.plotly_chart(fig_date)
