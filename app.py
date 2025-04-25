@@ -137,9 +137,16 @@ def criar_grafico_reunioes_por_dia(df):
         plot_bgcolor='white',
         paper_bgcolor='white',
         font=dict(color='#000000', size=16),
+        xaxis_title='Data',
         yaxis_title='Qtd. de Reuniões',
-        xaxis=dict(title_font=dict(color='#000000')),
-        yaxis=dict(title_font=dict(color='#000000')),
+        xaxis=dict(
+            title_font=dict(color='#000000'),
+            tickfont=dict(color='#000000', size=16)  # Ticks eixo X
+        ),
+        yaxis=dict(
+            title_font=dict(color='#000000'),
+            tickfont=dict(color='#000000', size=16)  # Ticks eixo Y
+        ),
         title=dict(x=0.5, xanchor='center', font=dict(size=20)),
         margin=dict(t=80),
         showlegend=False
@@ -174,10 +181,13 @@ def criar_grafico_por_pre_venda(df):
         font=dict(color='#000000', size=16),
         xaxis_title='Qtd. de Reuniões',
         yaxis_title='Pré-Venda',
-        xaxis=dict(title_font=dict(color='#000000')),
+        xaxis=dict(
+            title_font=dict(color='#000000'),
+            tickfont=dict(color='#000000', size=16)  # Ticks eixo X
+        ),
         yaxis=dict(
             title_font=dict(color='#000000'),
-            tickfont=dict(color='#000000', size=18)
+            tickfont=dict(color='#000000', size=18)  # Ticks eixo Y já estava em 18
         ),
         title=dict(x=0.5, xanchor='center', font=dict(size=20)),
         margin=dict(t=80),
