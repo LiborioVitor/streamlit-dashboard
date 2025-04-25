@@ -141,7 +141,7 @@ def criar_grafico_reunioes_por_dia(df):
         yaxis_title='Qtd. de Reuniões',
         xaxis=dict(
             title_font=dict(color='#000000'),
-            tickfont=dict(color='#000000', size=16)  # Ticks eixo X
+            tickfont=dict(color='#000000', size=14)  # Ticks eixo X
         ),
         yaxis=dict(
             title_font=dict(color='#000000'),
