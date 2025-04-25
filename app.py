@@ -9,11 +9,10 @@ import holidays
 # Configuração da página
 st.set_page_config(layout='wide', page_title="Painel de Reunião", page_icon="📊")
 
-# Autoatualização a cada 10 minuto
+# Autoatualização a cada 10 minutos
 st_autorefresh(interval=600 * 1000, key="refresh")
 
-# Estilização visual para TV
-# Estilização visual para TV com fontes mais escuras
+# Estilização profissional para TV
 st.markdown("""
     <style>
         html, body, .main, .block-container, .stApp {
@@ -22,19 +21,29 @@ st.markdown("""
         }
 
         .block-container {
-            padding-top: 3rem;
+            padding-top: 0.5rem;
             padding-left: 2rem;
             padding-right: 2rem;
         }
 
-        h1, h2, h3, h4, h5, h6 {
-            color: #000000 !important;
-            font-size: 2.2em !important;
+        h1 {
+            color: #2813AD !important;
+            font-size: 2.6em !important;
+            text-align: center;
+            margin-bottom: 0.2rem !important;
+            margin-top: 0 !important;
         }
 
-        .stMarkdown, .stText, .stPlotlyChart, .css-1offfwp, .css-10trblm, .css-1v0mbdj {
+        h6 {
+            text-align: center;
+            color: #666666 !important;
+            font-size: 1.1em !important;
+            margin-top: 0 !important;
+        }
+
+        .stMarkdown, .stText, .stPlotlyChart {
+            font-size: 1.3em !important;
             color: #000000 !important;
-            font-size: 1.4em !important;
         }
 
         #MainMenu, footer, header {
@@ -47,16 +56,11 @@ st.markdown("""
     </style>
 """, unsafe_allow_html=True)
 
-# Log de atualização
+# Log de atualização + cabeçalho
 st.markdown("""
-    <script>
-        console.log("🕒 Página recarregada em", new Date().toLocaleTimeString());
-    </script>
-""", unsafe_allow_html=True)
-
-# Título e horário
-st.title("📊 Painel de Reunião")
-st.markdown(f"**⏰ Atualizado em:** `{(datetime.now() - timedelta(hours=3)).strftime('%H:%M:%S')}`")
+    <h1>📊 Painel de Reuniões</h1>
+    <h6>Atualizado em: {}</h6>
+""".format((datetime.now() - timedelta(hours=3)).strftime('%d/%m/%Y %H:%M:%S')), unsafe_allow_html=True)
 
 # Função para obter os dados
 def obter_dados():
@@ -98,7 +102,7 @@ def criar_grafico_reunioes_por_dia(df):
         df_dia,
         x='data_reuniao',
         y='qtd_reunioes',
-        title='Reuniões por Dia (Últimos 10 dias)',
+        title='Reuniões por Dia (10 dias)',
         text='qtd_formatada',
         color='cor',
         color_discrete_map={'#2813AD': '#2813AD', 'red': 'red'}
@@ -129,7 +133,7 @@ def criar_grafico_reunioes_por_dia(df):
     fig.update_xaxes(
         tickmode='array',
         tickvals=df_dia['data_reuniao'],
-        ticktext=df_dia['data_reuniao'].dt.strftime('%d/%m/%Y'),
+        ticktext=df_dia['data_reuniao'].dt.strftime('%d/%m'),
         title='Data'
     )
 
@@ -137,18 +141,11 @@ def criar_grafico_reunioes_por_dia(df):
         plot_bgcolor='white',
         paper_bgcolor='white',
         font=dict(color='#000000', size=16),
-        xaxis_title='Data',
+        xaxis=dict(title_font=dict(color='#000000'), tickfont=dict(color='#000000', size=16)),
+        yaxis=dict(title_font=dict(color='#000000'), tickfont=dict(color='#000000', size=16)),
         yaxis_title='Qtd. de Reuniões',
-        xaxis=dict(
-            title_font=dict(color='#000000'),
-            tickfont=dict(color='#000000', size=12)  # Ticks eixo X
-        ),
-        yaxis=dict(
-            title_font=dict(color='#000000'),
-            tickfont=dict(color='#000000', size=16)  # Ticks eixo Y
-        ),
-        title=dict(x=0.5, xanchor='center', font=dict(size=20)),
-        margin=dict(t=80),
+        title=dict(x=0.5, xanchor='center', font=dict(size=22)),
+        margin=dict(t=70, b=40),
         showlegend=False
     )
     return fig
@@ -179,18 +176,12 @@ def criar_grafico_por_pre_venda(df):
         plot_bgcolor='white',
         paper_bgcolor='white',
         font=dict(color='#000000', size=16),
+        xaxis=dict(title_font=dict(color='#000000'), tickfont=dict(color='#000000', size=16)),
+        yaxis=dict(title_font=dict(color='#000000'), tickfont=dict(color='#000000', size=18)),
         xaxis_title='Qtd. de Reuniões',
         yaxis_title='Pré-Venda',
-        xaxis=dict(
-            title_font=dict(color='#000000'),
-            tickfont=dict(color='#000000', size=16)  # Ticks eixo X
-        ),
-        yaxis=dict(
-            title_font=dict(color='#000000'),
-            tickfont=dict(color='#000000', size=18)  # Ticks eixo Y já estava em 18
-        ),
-        title=dict(x=0.5, xanchor='center', font=dict(size=20)),
-        margin=dict(t=80),
+        title=dict(x=0.5, xanchor='center', font=dict(size=22)),
+        margin=dict(t=70, b=40),
         showlegend=False
     )
     return fig
@@ -200,7 +191,6 @@ df = obter_dados()
 fig_reunioes_dia = criar_grafico_reunioes_por_dia(df)
 fig_pre_venda = criar_grafico_por_pre_venda(df)
 
-# Exibir lado a lado com modo TV e sem toolbars interativas
 col1, col2 = st.columns(2)
 with col1:
     st.plotly_chart(fig_reunioes_dia, use_container_width=True, config={'displayModeBar': False})
