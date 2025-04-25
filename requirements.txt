@@ -6,3 +6,4 @@ pymysql
 streamlit-autorefresh
 datetime
 numpy
+holidays
