@@ -9,15 +9,16 @@ import holidays
 # Configuração da página
 st.set_page_config(layout='wide', page_title="Painel de Reunião", page_icon="📊")
 
-# Autoatualização a cada 1 minuto
-st_autorefresh(interval=60 * 1000, key="refresh")
+# Autoatualização a cada 10 minuto
+st_autorefresh(interval=600 * 1000, key="refresh")
 
 # Estilização visual para TV
+# Estilização visual para TV com fontes mais escuras
 st.markdown("""
     <style>
         html, body, .main, .block-container, .stApp {
             background-color: white !important;
-            color: #000 !important;
+            color: #000000 !important;
         }
 
         .block-container {
@@ -27,11 +28,12 @@ st.markdown("""
         }
 
         h1, h2, h3, h4, h5, h6 {
-            color: #2813AD !important;
+            color: #000000 !important;
             font-size: 2.2em !important;
         }
 
-        .stMarkdown, .stText, .stPlotlyChart {
+        .stMarkdown, .stText, .stPlotlyChart, .css-1offfwp, .css-10trblm, .css-1v0mbdj {
+            color: #000000 !important;
             font-size: 1.4em !important;
         }
 
@@ -60,21 +62,19 @@ st.markdown(f"**⏰ Atualizado em:** `{(datetime.now() - timedelta(hours=3)).str
 def obter_dados():
     engine = f.criar_conexao(database='teste')
     sql = '''
-            select  oportunidade, 
-                    pre_venda,
-                    vendedor,
-                    str_to_date(data_reuniao_calculada, '%d/%m/%Y') data_reuniao
-                from aux_comercial_agendamentos.reunioes_sdrs_geral rsg 
-                left join comportamento.equipes e on rsg.pre_venda = e.username
-            where 1=1
-            and str_to_date(data_reuniao_calculada, '%d/%m/%Y') >= NOW() - interval 10 day
-            and reuniao_ocorrida = 1
-            and e.sub_equipe = 'SDR'
-            and username <> 'Deivid Rocha'
-            '''
+        SELECT oportunidade, 
+               pre_venda,
+               vendedor,
+               STR_TO_DATE(data_reuniao_calculada, '%d/%m/%Y') AS data_reuniao
+        FROM aux_comercial_agendamentos.reunioes_sdrs_geral rsg 
+        LEFT JOIN comportamento.equipes e ON rsg.pre_venda = e.username
+        WHERE STR_TO_DATE(data_reuniao_calculada, '%d/%m/%Y') >= NOW() - INTERVAL 10 DAY
+          AND reuniao_ocorrida = 1
+          AND e.sub_equipe = 'SDR'
+          AND username <> 'Deivid Rocha'
+    '''
     df = f.select_para_df(engine=engine, sql=sql)
     engine.dispose()
-
     df['data_reuniao'] = pd.to_datetime(df['data_reuniao'])
     return df
 
@@ -136,8 +136,10 @@ def criar_grafico_reunioes_por_dia(df):
     fig.update_layout(
         plot_bgcolor='white',
         paper_bgcolor='white',
-        font=dict(color='#2813AD', size=14),
+        font=dict(color='#000000', size=16),
         yaxis_title='Qtd. de Reuniões',
+        xaxis=dict(title_font=dict(color='#000000')),
+        yaxis=dict(title_font=dict(color='#000000')),
         title=dict(x=0.5, xanchor='center', font=dict(size=20)),
         margin=dict(t=80),
         showlegend=False
@@ -169,9 +171,14 @@ def criar_grafico_por_pre_venda(df):
     fig.update_layout(
         plot_bgcolor='white',
         paper_bgcolor='white',
-        font=dict(color='#2813AD', size=14),
+        font=dict(color='#000000', size=16),
         xaxis_title='Qtd. de Reuniões',
         yaxis_title='Pré-Venda',
+        xaxis=dict(title_font=dict(color='#000000')),
+        yaxis=dict(
+            title_font=dict(color='#000000'),
+            tickfont=dict(color='#000000', size=18)
+        ),
         title=dict(x=0.5, xanchor='center', font=dict(size=20)),
         margin=dict(t=80),
         showlegend=False
@@ -180,12 +187,12 @@ def criar_grafico_por_pre_venda(df):
 
 # Executar
 df = obter_dados()
-
 fig_reunioes_dia = criar_grafico_reunioes_por_dia(df)
 fig_pre_venda = criar_grafico_por_pre_venda(df)
 
+# Exibir lado a lado com modo TV e sem toolbars interativas
 col1, col2 = st.columns(2)
 with col1:
-    st.plotly_chart(fig_reunioes_dia, use_container_width=True)
+    st.plotly_chart(fig_reunioes_dia, use_container_width=True, config={'displayModeBar': False})
 with col2:
-    st.plotly_chart(fig_pre_venda, use_container_width=True)
+    st.plotly_chart(fig_pre_venda, use_container_width=True, config={'displayModeBar': False})
