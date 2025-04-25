@@ -46,6 +46,14 @@ st.markdown("""
             color: #000000 !important;
         }
 
+        .js-plotly-plot .plotly .modebar {
+            display: none !important;
+        }
+
+        .plot-container .main-svg {
+            color: #000000 !important;
+        }
+
         #MainMenu, footer, header {
             visibility: hidden;
         }
@@ -144,7 +152,7 @@ def criar_grafico_reunioes_por_dia(df):
         xaxis=dict(title_font=dict(color='#000000'), tickfont=dict(color='#000000', size=16)),
         yaxis=dict(title_font=dict(color='#000000'), tickfont=dict(color='#000000', size=16)),
         yaxis_title='Qtd. de Reuniões',
-        title=dict(x=0.5, xanchor='center', font=dict(size=22)),
+        title=dict(x=0.5, xanchor='center', font=dict(color='#000000', size=22)),
         margin=dict(t=70, b=40),
         showlegend=False
     )
@@ -180,7 +188,7 @@ def criar_grafico_por_pre_venda(df):
         yaxis=dict(title_font=dict(color='#000000'), tickfont=dict(color='#000000', size=18)),
         xaxis_title='Qtd. de Reuniões',
         yaxis_title='Pré-Venda',
-        title=dict(x=0.5, xanchor='center', font=dict(size=22)),
+        title=dict(x=0.5, xanchor='center', font=dict(color='#000000', size=22)),
         margin=dict(t=70, b=40),
         showlegend=False
     )
