@@ -64,11 +64,17 @@ st.markdown("""
     </style>
 """, unsafe_allow_html=True)
 
-# Log de atualização + cabeçalho
+# Log de atualização + cabeçalho com badge de teste
 st.markdown("""
-    <h1>📊 Painel de Reuniões</h1>
+    <h1 style="text-align: center;">
+        📊 Painel de Reuniões 
+        <span style='background-color: #FF4B4B; color: white; padding: 4px 10px; border-radius: 8px; font-size: 0.5em; margin-left: 10px; vertical-align: middle;'>
+            DADOS EM TESTE
+        </span>
+    </h1>
     <h6>Atualizado em: {}</h6>
 """.format((datetime.now() - timedelta(hours=3)).strftime('%d/%m/%Y %H:%M:%S')), unsafe_allow_html=True)
+
 
 # Função para obter os dados
 def obter_dados():
