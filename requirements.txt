@@ -7,4 +7,3 @@ streamlit-autorefresh
 datetime
 numpy
 holidays
-time

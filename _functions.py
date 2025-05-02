@@ -1,6 +1,5 @@
 from sqlalchemy import create_engine, text
 import pandas as pd
-import json
 
 def criar_conexao(database):
     # cria o engine da conexao com o banco
