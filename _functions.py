@@ -35,3 +35,23 @@ def select_para_df(sql, engine):
 
     except Exception as error:
         print(f"Erro ao tentar colocar o select no df: {error}")
+
+
+def executar_sql(sql, engine):
+    """
+    Executa um comando SQL no banco de dados.
+
+    Parâmetros:
+    sql (str): O comando SQL a ser executado.
+    engine: A conexão com o banco de dados.
+
+    Retorna:
+    None
+    """
+    try:
+        with engine.connect() as conn:
+            conn.execute(text(sql))  # Executa o comando SQL
+            conn.commit()
+
+    except Exception as error:
+        print(f"Erro ao tentar executar o comando SQL: {error}")
